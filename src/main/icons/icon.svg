@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="100"
+   height="100"
+   viewBox="0 0 26.458333 26.458334"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="icon.svg"
+   inkscape:export-filename="C:\Users\bjadav\Desktop\Python\Power-BI-Theme-Generator\src\main\icons\icon.png"
+   inkscape:export-xdpi="144"
+   inkscape:export-ydpi="144">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="22.4"
+     inkscape:cx="34.597461"
+     inkscape:cy="71.271375"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1440"
+     inkscape:window-height="837"
+     inkscape:window-x="1358"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true">
+    <sodipodi:guide
+       position="5.2916667,21.166667"
+       orientation="0,1"
+       id="guide4522"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="5.2916667,16.370259"
+       orientation="1,0"
+       id="guide4526"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="11.759935,5.2916667"
+       orientation="0,1"
+       id="guide4528"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="16.971615,13.229167"
+       orientation="0,1"
+       id="guide4530"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="21.166667,11.49259"
+       orientation="1,0"
+       id="guide4532"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="7.3495746,13.229164"
+       orientation="1,0"
+       id="guide4536"
+       inkscape:locked="false"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-270.54165)">
+    <rect
+       id="rect10"
+       width="26.458334"
+       height="26.458334"
+       x="0"
+       y="270.60712"
+       style="fill:#ffd116;fill-opacity:0.69849249;stroke:none;stroke-width:0.26458332"
+       inkscape:export-filename="C:\Users\bjadav\Desktop\Python\Power-BI-Theme-Generator\src\main\icons\base\64.png"
+       inkscape:export-xdpi="144"
+       inkscape:export-ydpi="144" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.37540972;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 5.2916667,275.20404 v 17.15983"
+       id="path4520"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="C:\Users\bjadav\Desktop\Python\Power-BI-Theme-Generator\src\main\icons\base\64.png"
+       inkscape:export-xdpi="61.439999"
+       inkscape:export-ydpi="61.439999" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.35260499;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 5.2916667,291.70832 H 21.887184"
+       id="path4524"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="C:\Users\bjadav\Desktop\Python\Power-BI-Theme-Generator\src\main\icons\base\64.png"
+       inkscape:export-xdpi="61.439999"
+       inkscape:export-ydpi="61.439999" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.32291663;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 7.3495746,275.83332 13.8170924,0 0,5.97981"
+       id="path4538"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="C:\Users\bjadav\Desktop\Python\Power-BI-Theme-Generator\src\main\icons\base\64.png"
+       inkscape:export-xdpi="61.439999"
+       inkscape:export-ydpi="61.439999"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.3190316;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 21.816314,283.77082 H 7.3495746"
+       id="path4542"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="C:\Users\bjadav\Desktop\Python\Power-BI-Theme-Generator\src\main\icons\base\64.png"
+       inkscape:export-xdpi="61.439999"
+       inkscape:export-ydpi="61.439999" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.19301319;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 21.166667,285.63978 v 4.24291"
+       id="path4546"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="C:\Users\bjadav\Desktop\Python\Power-BI-Theme-Generator\src\main\icons\base\64.png"
+       inkscape:export-xdpi="61.439999"
+       inkscape:export-ydpi="61.439999"
+       sodipodi:nodetypes="cc" />
+  </g>
+</svg>
