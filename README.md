@@ -5,7 +5,7 @@ and it extracts all available properties of visuals such as colors, formatting e
 properties they want to extract from Power BI file and Power BI Theme Generator will generate `.json ` theme file which can be imported in another Power BI 
 files to get same look and feel.
 
-Standard approach for using this is as below:
+Standard approach for using Power BI Theme Generator is as below:
 * Create on template Power BI file with visuals that you are going to use in others reports.
 * Assign colors, format etc. to visuals in template Power BI file.
 * Use Power BI Theme Generator tool on this template Power BI file and generate theme.
