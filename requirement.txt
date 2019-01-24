@@ -2,6 +2,7 @@ altgraph==0.16.1
 boto3==1.9.83
 botocore==1.12.83
 Click==7.0
+datauri==1.0.0
 docutils==0.14
 fbs==0.6.6
 future==0.17.1
@@ -12,6 +13,7 @@ PyInstaller==3.4
 PyQt5==5.11.3
 PyQt5-sip==4.19.13
 pyqt5-tools==5.11.3.1.4
+python-datauri==0.2.8
 python-dateutil==2.7.5
 python-dotenv==0.10.1
 pywin32-ctypes==0.2.0
