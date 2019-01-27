@@ -596,6 +596,8 @@ class PowerBIThemeGeneratorWindow(QMainWindow):
 
     def generateTheme(self):
         try:
+            correctVisualData = True
+            correctWildcardData = True
             themeData = {
                 'name': self._generalProperties['name']
                 if self._generalProperties.get('name') is not None else 'My Theme',
@@ -654,6 +656,7 @@ class PowerBIThemeGeneratorWindow(QMainWindow):
                             if selectedVisual in repeatedVisuals:
                                 detailMessage += selectedVisual + ' is selected in report page'\
                                                  + selectedVisualsList[0][i] + '\n'
+                        correctVisualData = False
                         self._showDialogAfterThemeGeneration(message, detailMessage=detailMessage)
 
                     else:
@@ -677,7 +680,7 @@ class PowerBIThemeGeneratorWindow(QMainWindow):
                                     if wildCardProperty in repeatedWildCardProperties:
                                         detailMessage += wildCardProperty + 'is selected in report page' +\
                                                          wildCardPropertiesList[0][i]
-
+                                correctWildcardData = False
                                 self._showDialogAfterThemeGeneration(message, detailMessage=detailMessage)
                             else:
                                 themeData['visualStyles']['*'] = {
@@ -691,8 +694,8 @@ class PowerBIThemeGeneratorWindow(QMainWindow):
                             themeData['visualStyles'][selectedVisualsList[1][i]] = {
                                 "*": selectedVisualsList[2][i]
                             }
-
-            self._saveThemeFile(themeData, 'C:/Users/bjadav/Desktop/', themeData['name'])
+            if correctVisualData is True and correctWildcardData is True:
+                self._saveThemeFile(themeData, 'C:/Users/bjadav/Desktop/', themeData['name'])
 
         except Exception as e:
             ShowErrorDialog(LogException(e))
