@@ -7,7 +7,7 @@ from ErrorLoggingService import LogException, ShowErrorDialog
 
 
 class PowerBIThemeGenerator:
-    _default_theme_accent_colors = ["FFFFFF", "000000", "#01B8AA", "#374649", "#FD625E", "#F2C80F", "#5F6B6D",
+    _default_theme_accent_colors = ["#FFFFFF", "#000000", "#01B8AA", "#374649", "#FD625E", "#F2C80F", "#5F6B6D",
                                     "#8AD4EB", "#FE9666", "#A66999", "#3599B8", "#DFBFBF", "#4AC5BB", "#5F6B6D",
                                     "#FB8281", "#F4D25A", "#7F898A", "#A4DDEE", "#FDAB89", "#B687AC", "#28738A",
                                     "#A78F8F", "#168980", "#293537", "#BB4A4A", "#B59525", "#475052", "#6A9FB0",

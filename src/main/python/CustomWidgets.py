@@ -1,7 +1,6 @@
-from PyQt5.QtWidgets import QListWidgetItem, QWidget, QTreeWidgetItem
+from PyQt5.QtWidgets import QListWidgetItem, QTreeWidgetItem, QCheckBox
 
-
-class CQReportPageListWidgetItem(QListWidgetItem):
+class CQListWidgetItemReportPages(QListWidgetItem):
 
     _metaData = None
 
@@ -17,7 +16,7 @@ class CQReportPageListWidgetItem(QListWidgetItem):
         return self._metaData
 
 
-class CQReportPageVisualsListWidgetItem(QListWidgetItem):
+class CQListWidgetItemReportPageVisuals(QListWidgetItem):
 
     _visualProperties = None
 
@@ -34,7 +33,8 @@ class CQReportPageVisualsListWidgetItem(QListWidgetItem):
     def GetVisualProperties(self):
         return self._visualProperties
 
-class CQVisualPropertiesTreeWidgetItem(QTreeWidgetItem):
+
+class CQTreeWidgetItemVisualProperties(QTreeWidgetItem):
 
     _visualProperties = None
 

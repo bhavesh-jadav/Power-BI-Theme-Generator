@@ -1,6 +1,7 @@
 import json
 import sys
 import logging
+from functools import partial
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import QColor, QFont
 from PyQt5.QtCore import Qt
@@ -9,8 +10,8 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QAction, QFileDialog, QLa
 from PyQt5.QtWidgets import QStatusBar, QListWidget, QVBoxLayout, QHBoxLayout, QWidget, QTabWidget, QTabBar
 from PyQt5.QtWidgets import QGroupBox, QCheckBox, QTreeWidget, QMessageBox, QLineEdit, QFormLayout, QDialog
 from PowerBIThemeGenerator import PowerBIThemeGenerator
-from CustomWidgets import CQReportPageListWidgetItem, CQReportPageVisualsListWidgetItem, \
-    CQVisualPropertiesTreeWidgetItem
+from CustomWidgets import CQListWidgetItemReportPages, CQListWidgetItemReportPageVisuals, \
+    CQTreeWidgetItemVisualProperties
 from Util import ColorUtil
 from ErrorLoggingService import LogException, ShowErrorDialog
 import AppInfo
@@ -56,7 +57,7 @@ class PowerBIThemeGeneratorWindow(QMainWindow):
         self._verticalLayoutMainWindow.addWidget(self._tabWidgetMainWindow)
 
         # for testing
-        # self.__testOpenFileMethod()
+        self.__testOpenFileMethod()
         # end for testing
 
         self._horizontalLayoutWelcomeScreen = QHBoxLayout()
@@ -136,7 +137,7 @@ class PowerBIThemeGeneratorWindow(QMainWindow):
             ShowErrorDialog(LogException(e))
 
     def __testOpenFileMethod(self):
-        self._pbiFilePath = 'C:/Users/bjadav/Desktop/Python/Power BI Theme Generator/sample_report.pbix'
+        self._pbiFilePath = 'G:/Power BI Reports/Theme Template.pbix'
         self._powerBIThemeGenerator = PowerBIThemeGenerator(self._pbiFilePath)
         self._reportVisualData = self._powerBIThemeGenerator.modifiedDataStructure()
 
@@ -381,7 +382,7 @@ class PowerBIThemeGeneratorWindow(QMainWindow):
 
             i = 0
             for reportSection in self._powerBIThemeGenerator.get_report_sections():
-                reportListWidgetItem = CQReportPageListWidgetItem(str(reportSection['displayName']))
+                reportListWidgetItem = CQListWidgetItemReportPages(str(reportSection['displayName']))
                 reportListWidgetItem.SetMetaData(reportSection)
                 reportListWidgetItem.setToolTip(reportSection['name'])
                 self._listWidgetReportPages.insertItem(i, reportListWidgetItem)
@@ -411,7 +412,7 @@ class PowerBIThemeGeneratorWindow(QMainWindow):
                     (self._reportVisualData[vizProperties['report_section']]
                         .get('visuals')[vizProperties['visual_index']]['__selected']) = False
 
-            def __getVisualProperties(item: CQReportPageVisualsListWidgetItem):
+            def __getVisualProperties(item: CQListWidgetItemReportPageVisuals):
                 try:
                     __updateStateInDataStructure(item)
                     self._createSelectedVisualPropertiesTree(item.GetVisualProperties())
@@ -462,7 +463,7 @@ class PowerBIThemeGeneratorWindow(QMainWindow):
                     listDisplayText = str(visualType)
                 else:
                     listDisplayText = str(visualType) + " - " + visualTitle.get('text')
-                pageVisualsList = CQReportPageVisualsListWidgetItem(listDisplayText)
+                pageVisualsList = CQListWidgetItemReportPageVisuals(listDisplayText)
                 pageVisualsList.setFlags(pageVisualsList.flags() | Qt.ItemIsUserCheckable)
                 if visual['__selected'] is False:
                     pageVisualsList.setCheckState(Qt.Unchecked)
@@ -484,18 +485,39 @@ class PowerBIThemeGeneratorWindow(QMainWindow):
 
     def _createSelectedVisualPropertiesTree(self, visualProperties=None):
         try:
-            def __updateStateInDataStructure(item):
-                vizProperties = item.GetVisualProperties()
-                if item.checkState(0) == Qt.Unchecked:
-                    (self._reportVisualData[vizProperties['report_section']]
-                        .get('visuals')[vizProperties['visual_index']].get('objects')
-                        .get(str(item.data(0, 0)))['__selected']) = False
-                else:
-                    (self._reportVisualData[vizProperties['report_section']]
-                        .get('visuals')[vizProperties['visual_index']].get('objects')
-                        .get(str(item.data(0, 0)))['__selected']) = True
 
-            def __treeWidgetVisualsPropertiesClicked(item: CQVisualPropertiesTreeWidgetItem):
+            def __getVisualProperty(item: CQTreeWidgetItemVisualProperties):
+                try:
+                    visualProperties = item.GetVisualProperties()
+                    visualProperty = (self._reportVisualData[visualProperties['report_section']]
+                                      .get('visuals')[visualProperties['visual_index']].get('objects')
+                                      .get(str(item.data(0, 0))))
+                    return visualProperty
+                except Exception as e:
+                    ShowErrorDialog(LogException(e))
+
+            def __updateStateInDataStructure(item: CQTreeWidgetItemVisualProperties):
+                try:
+                    visualProperty = __getVisualProperty(item)
+                    if item.checkState(0) == Qt.Unchecked:
+                        visualProperty['__selected'] = False
+                    else:
+                        visualProperty['__selected'] = True
+                except Exception as e:
+                    ShowErrorDialog(LogException(e))
+
+            def __updateWildCardState(state, item=None):
+                try:
+                    visualProperty = __getVisualProperty(item)
+                    if state == Qt.Checked:
+                        visualProperty['__wildcard'] = True
+                        # print(visualProperty)
+                    elif visualProperty.get('__wildcard') is not None and state == Qt.Unchecked:
+                        visualProperty.pop('__wildcard')
+                except Exception as e:
+                    ShowErrorDialog(LogException(e))
+
+            def __treeWidgetVisualsPropertiesClicked(item: CQTreeWidgetItemVisualProperties):
                 try:
                     __updateStateInDataStructure(item)
                 except Exception as e:
@@ -535,7 +557,7 @@ class PowerBIThemeGeneratorWindow(QMainWindow):
             else:
                 self._treeWidgetSelectedVisualProperties.clear()
 
-            self._treeWidgetSelectedVisualProperties.setHeaderLabels(['Property', 'Value'])
+            self._treeWidgetSelectedVisualProperties.setHeaderLabels(['Property', 'Value', 'Wild Card'])
             treeHeader = self._treeWidgetSelectedVisualProperties.header()
             treeHeader.setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
             # treeHeader.setStretchLastSection(False)
@@ -543,8 +565,11 @@ class PowerBIThemeGeneratorWindow(QMainWindow):
             visualObjects = visualProperties['visual_properties'].get('objects')
             for object, objectValues in visualObjects.items():
                 if len(objectValues.keys()) > 1:  # greater than 1 because one default key is __selected
-                    parent = CQVisualPropertiesTreeWidgetItem(self._treeWidgetSelectedVisualProperties, [str(object)])
+                    parent = CQTreeWidgetItemVisualProperties(self._treeWidgetSelectedVisualProperties, [str(object)])
                     parent.SetVisualProperties(visualProperties)
+                    wildCardCheckBox = QCheckBox()
+                    wildCardCheckBox.stateChanged.connect(partial(__updateWildCardState, item=parent))
+                    self._treeWidgetSelectedVisualProperties.setItemWidget(parent, 2, wildCardCheckBox)
                     if objectValues['__selected'] is False:
                         parent.setCheckState(0, Qt.Unchecked)
                     else:
@@ -556,7 +581,7 @@ class PowerBIThemeGeneratorWindow(QMainWindow):
                                 mObjectV = objectValue.get('solid').get('color')
                             else:
                                 mObjectV = objectValue
-                            CQVisualPropertiesTreeWidgetItem(parent, [str(objectKey), str(mObjectV)])
+                            CQTreeWidgetItemVisualProperties(parent, [str(objectKey), str(mObjectV)])
                 else:
                     objectValues['__selected'] = False
 
@@ -572,7 +597,6 @@ class PowerBIThemeGeneratorWindow(QMainWindow):
                 'name': self._generalProperties['name']
                 if self._generalProperties.get('name') is not None else 'My Theme',
             }
-            print(themeData)
             dataColors = self._generalProperties.get('dataColors')
             background = self._generalProperties.get('background')
             foreground = self._generalProperties.get('foreground')
@@ -587,21 +611,30 @@ class PowerBIThemeGeneratorWindow(QMainWindow):
             if tableAccent is not None and tableAccent is not "":
                 themeData['tableAccent'] = tableAccent
 
-            selectedVisualsList = [[], [], []]  # page name, visual type and visual data
-            i = 0
+            selectedVisualsList = [[], [], []]  # page name, visual type and visual data or visual objects
+            wildCardPropertiesList = [[], [], []]  # page name, property type and property data
+            visualObjectIndex = 0
             if self._pbiFilePath is not None:
                 themeData['visualStyles'] = {}
                 for reportPage in self._reportVisualData:
                     for visual in self._reportVisualData[reportPage].get('visuals'):
+                        pageName = self._reportVisualData[reportPage]['reportPageDisplayName']
                         if visual['__selected'] is True:
-                            selectedVisualsList[0].append(self._reportVisualData[reportPage]['reportPageDisplayName'])
+                            selectedVisualsList[0].append(pageName)
                             selectedVisualsList[1].append(visual['visual_type'])
                             selectedVisualsList[2].append({})
                             visualObjects = visual.get('objects')
                             for object in visualObjects:
                                 if visualObjects[object]['__selected'] is True:
-                                    selectedVisualsList[2][i][object] = [visualObjects[object]]
-                            i += 1
+                                    selectedVisualsList[2][visualObjectIndex][object] = [visualObjects[object]]
+                                    if visualObjects[object].get('__wildcard') is not None:
+                                        # wildCardObjects[object] = [visualObjects[object]]
+                                        wildCardPropertiesList[0].append(pageName)
+                                        wildCardPropertiesList[1].append(object)
+                                        wildCardPropertiesList[2].append(visualObjects[object])
+
+                            visualObjectIndex += 1
+                # print(wildCardPropertiesList)
                 if len(selectedVisualsList[1]) > 0:
                     if len(selectedVisualsList[1]) != len(set(selectedVisualsList[1])):
                         message = 'Multiple visual of same type selected from different report pages. See details below.' \
@@ -617,11 +650,41 @@ class PowerBIThemeGeneratorWindow(QMainWindow):
 
                         for i, selectedVisual in enumerate(selectedVisualsList[1]):
                             if selectedVisual in repeatedVisuals:
-                                detailMessage += selectedVisual + ' is selected in ' + selectedVisualsList[0][i] + '\n'
-
+                                detailMessage += selectedVisual + ' is selected in report page'\
+                                                 + selectedVisualsList[0][i] + '\n'
                         self._showDialogAfterThemeGeneration(message, detailMessage=detailMessage)
 
                     else:
+                        # adding wild card data
+                        if len(wildCardPropertiesList[1]) > 0 and\
+                                len(wildCardPropertiesList[1]) != len(set(wildCardPropertiesList[1])):
+                            message = 'Multiple wild card properties of same types are selected. Please only select '\
+                                      'unique properties for wild card from all the visuals. As a result this' \
+                                      'properties will not be added as wild card property in them file. ' \
+                                      'See details below'
+                            detailMessage = ''
+                            seen = set()
+                            repeatedWildCardProperties = []
+                            for wildCardProperty in wildCardPropertiesList[1]:
+                                if wildCardProperty in seen:
+                                    repeatedWildCardProperties.append(wildCardProperty)
+                                else:
+                                    seen.add(wildCardProperty)
+
+                            for i, wildCardProperty in enumerate(wildCardPropertiesList[1]):
+                                if wildCardProperty in repeatedWildCardProperties:
+                                    detailMessage += wildCardProperty + 'is selected in report page' +\
+                                                     wildCardPropertiesList[0][i]
+
+                            self._showDialogAfterThemeGeneration(message, detailMessage=detailMessage)
+                        else:
+                            themeData['visualStyles']['*'] = {
+                                '*': {}
+                            }
+                            for i in range(len(wildCardPropertiesList[1])):
+                                themeData['visualStyles']['*']['*'][wildCardPropertiesList[1][i]] = [wildCardPropertiesList[2][i]]
+
+                        # adding visual data
                         for i in range(len(selectedVisualsList[1])):
                             themeData['visualStyles'][selectedVisualsList[1][i]] = {
                                 "*": selectedVisualsList[2][i]
@@ -648,12 +711,19 @@ class PowerBIThemeGeneratorWindow(QMainWindow):
 
     def _saveThemeFile(self, themeData, saveFileDirectory, fileName):
         try:
+            _themeData = json.loads(json.dumps(themeData))
+            # Removing internal keys such as __selected from final output
+            for visualType, visualProperties in _themeData['visualStyles'].items():
+                for propertyType, propertyValue in visualProperties['*'].items():
+                    if propertyValue[0].get('__selected') is not None:
+                        propertyValue[0].pop('__selected')
+
             initialSaveFilePath = saveFileDirectory + fileName + '.json'
             saveFile = QFileDialog.getSaveFileName(self, 'Save Theme File', initialSaveFilePath,
                                                    filter='JSON file(*.json)')[0]
             if saveFile is not '':
                 with open(saveFile, 'w') as themeFile:
-                    json.dump(themeData, themeFile, indent=4)
+                    json.dump(_themeData, themeFile, indent=4)
                 message = 'Successfully generated theme'
                 self._showDialogAfterThemeGeneration(message)
         except Exception as e:
