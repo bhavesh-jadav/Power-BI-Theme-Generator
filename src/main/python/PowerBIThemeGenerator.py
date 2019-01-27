@@ -2,7 +2,6 @@ from zipfile import ZipFile, BadZipFile, LargeZipFile
 from Util import ColorUtil
 import json
 import io
-import logging
 from ErrorLoggingService import LogException, ShowErrorDialog
 
 
