@@ -57,7 +57,7 @@ class PowerBIThemeGeneratorWindow(QMainWindow):
         self._verticalLayoutMainWindow.addWidget(self._tabWidgetMainWindow)
 
         # for testing
-        self.__testOpenFileMethod()
+        # self.__testOpenFileMethod()
         # end for testing
 
         self._horizontalLayoutWelcomeScreen = QHBoxLayout()
