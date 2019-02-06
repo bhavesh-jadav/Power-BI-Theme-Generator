@@ -1,6 +1,6 @@
 # Power BI Theme Generator
 
-Power BI Theme Generator is a desktop tool which helps you generate themes from Power BI file. It scans the Power BI file for visuals 
+Power BI Theme Generator is a desktop tool which helps you generate Power BI theme files from Power BI file. It scans the Power BI file for visuals 
 and it extracts all available properties of visuals such as colors, formatting etc. and shows it to user. Then user selects which visuals and 
 properties they want to extract from Power BI file and Power BI Theme Generator will generate `.json ` theme file which can be imported in another Power BI 
 files to get same look and feel.
@@ -11,7 +11,7 @@ Standard approach for using Power BI Theme Generator is as below:
 * Use Power BI Theme Generator tool on this template Power BI file and generate theme.
 * Use this theme across other reports.
 
-It is not necessary to create template Power BI file. You can use any Power BI file to extract visual properties to create them using Power BI Theme Generator.
+It is not necessary to create template Power BI file. You can use any Power BI file to extract visual properties to create theme using Power BI Theme Generator.
 
 ## Getting Started
 
