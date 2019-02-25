@@ -208,8 +208,8 @@ class PowerBIThemeGeneratorWindow(QMainWindow):
                         buttonBackgroundColor = 'background-color: ' + hexColor
                         if sender == 'push_button_data_color':
                             dataColors.append(hexColor)
-                            lineEditDataColors.setText(','.join(dataColors))
                             self._generalProperties['dataColors'] = dataColors
+                            lineEditDataColors.setText(','.join(dataColors))
                         elif sender == 'push_button_background_color':
                             pushButtonBackgroundColorPicker.setStyleSheet(buttonBackgroundColor)
                             lineEditBackgroundColor.setText(hexColor)
@@ -230,6 +230,8 @@ class PowerBIThemeGeneratorWindow(QMainWindow):
                     sender = self.sender().objectName()
                     if sender == 'line_edit_data_color':
                         __validateDataColors()
+                        nonlocal dataColors
+                        dataColors = lineEditDataColors.text().split(",")
                         self._generalProperties['dataColors'] = dataColors
                         return
                     elif sender == 'line_edit_background_color':
@@ -602,7 +604,7 @@ class PowerBIThemeGeneratorWindow(QMainWindow):
                 'name': self._generalProperties['name']
                 if self._generalProperties.get('name') is not None else 'My Theme',
             }
-            dataColors = self._generalProperties.get('dataColors')
+            dataColors = list(filter(None, self._generalProperties.get('dataColors')))
             background = self._generalProperties.get('background')
             foreground = self._generalProperties.get('foreground')
             tableAccent = self._generalProperties.get('tableAccent')
@@ -619,8 +621,8 @@ class PowerBIThemeGeneratorWindow(QMainWindow):
             selectedVisualsList = [[], [], []]  # page name, visual type and visual data or visual objects
             wildCardPropertiesList = [[], [], []]  # page name, property type and property data
             visualObjectIndex = 0
+            themeData['visualStyles'] = {}
             if self._pbiFilePath is not None:
-                themeData['visualStyles'] = {}
                 for reportPage in self._reportVisualData:
                     for visual in self._reportVisualData[reportPage].get('visuals'):
                         pageName = self._reportVisualData[reportPage]['reportPageDisplayName']
