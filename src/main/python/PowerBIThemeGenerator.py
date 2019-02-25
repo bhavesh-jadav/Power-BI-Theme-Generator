@@ -79,14 +79,12 @@ class PowerBIThemeGenerator:
 
             page_properties = self._get_page_properties(report_page_section)
             if page_properties is not None:
-                # print(page_properties)
                 page_objects = self._fetch_object_properties_value(page_properties.get('objects', {}))
-                if page_objects is True:
+                if page_objects is not None:
                     page_visuals_properties['visuals'].append({
                         'visual_type': 'page',
                         'objects': page_objects,
                     })
-
             return page_visuals_properties
         except Exception as e:
             ShowErrorDialog(LogException(e))
