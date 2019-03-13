@@ -600,11 +600,16 @@ class PowerBIThemeGeneratorWindow(QMainWindow):
         try:
             correctVisualData = True
             correctWildcardData = True
+            themeName = self._generalProperties.get('name')
             themeData = {
-                'name': self._generalProperties['name']
-                if self._generalProperties.get('name') is not None else 'My Theme',
+                'name': themeName
+                if themeName is not None and len(themeName.strip()) > 0 else 'My Theme',
             }
-            dataColors = list(filter(None, self._generalProperties.get('dataColors')))
+            if self._generalProperties.get('dataColors') is not None:
+                dataColors = list(filter(None, self._generalProperties.get('dataColors')))
+
+            else:
+                dataColors = []
             background = self._generalProperties.get('background')
             foreground = self._generalProperties.get('foreground')
             tableAccent = self._generalProperties.get('tableAccent')
