@@ -16,7 +16,7 @@ It is not necessary to create template Power BI file. You can use any Power BI f
 ## Getting Started
 
 1. Clone this repository.
-2. Install all libraries mentioned in `requirement.txt`
+2. Install all libraries mentioned in `requirement.txt` by running `pip install requirement.txt`
 3. Use following ways to run the program
     * Run `PowerBIThemeGeneratorGUI.py` from `src/main/python`
     * From project root folder type `fbs run` in cmd to run the program
